@@ -11,14 +11,18 @@ var Player = class Player {
       this.dir=0;
       this.speed=2;
       this.life=100;
-        this.AI=AI;
+      this.AI=AI;
       
+      this.bullets=[];
     }
     setOthers(others){
       this.others=others;
     }
   
     step(){
+      while(this.bullets.length>maxbullets){
+        this.bullets.splice(1,1);
+        }
          //this.wrap();
    this.border();
    if(typeof this.AI =="function"){
@@ -48,10 +52,10 @@ var Player = class Player {
     if(Math.random()>0.9){
       this.shoot();
     }
-    if(this.life>40&&Math.random()>0.999){
+    if(this.life>=15&&Math.random()>0.99){
         this.split();
     }
-    if(this.life<10){
+    if(this.life<15&&Math.random()>0.99){
         this.life+=1;
     }
      // this.x+=Math.random()*10-5;
