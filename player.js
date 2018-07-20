@@ -1,5 +1,5 @@
 
-var controller=function(t){
+var manual=function(t){
   if (keyIsDown(LEFT_ARROW)) {
    t.turnLeft();
   }
