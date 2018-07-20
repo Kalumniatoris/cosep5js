@@ -1,5 +1,24 @@
 
-
+var controller=function(t){
+  if (keyIsDown(LEFT_ARROW)) {
+   t.turnLeft();
+  }
+  if (keyIsDown(RIGHT_ARROW)) {
+   t.turnRight();
+  }
+  if (keyIsDown(UP_ARROW)) {
+   t.speedUp();
+  }
+  if (keyIsDown(DOWN_ARROW)) {
+   t.speedDown();
+  }
+  if (keyIsDown(32)) {
+    t.shoot();
+   }
+   if (keyIsDown(90)) {
+    t.split();
+   }
+}
 var Player = class Player {
   
     constructor(id,x, y, color,AI=undefined) {
@@ -12,48 +31,48 @@ var Player = class Player {
       this.speed=2;
       this.life=100;
       this.AI=AI;
-      
+      this.maxSpeed=3;
+      this.acceleration=0.2;
       this.bullets=[];
+      this.clonning=false;
     }
     setOthers(others){
       this.others=others;
     }
-  
+  turnRight(angle=Math.PI*2/180){
+    this.dir+=angle;
+  }  turnLeft(angle=Math.PI*2/180){
+    this.dir-=angle;
+  }
+  speedUp(){
+    this.speed=Math.min(this.speed+this.acceleration,this.maxSpeed)
+  }
+  speedDown(){
+    this.speed=Math.max(this.speed-this.acceleration,-this.maxSpeed)
+  }
+  stop(){
+    this.speed=0;
+  }
     step(){
       while(this.bullets.length>maxbullets){
         this.bullets.splice(1,1);
         }
          //this.wrap();
    this.border();
+   this.forward();
    if(typeof this.AI =="function"){
        this.AI(this);
    }else{
-    var q=Math.floor((Math.random() * 4) + 1);
-    q=0;
+ 
     this.dir+=(Math.PI*2)*(0.05-Math.random()*0.1);
   //  this.dir+=Math.random()/100;
-    this.forward();
-    switch(q){
-      case 0:
-      break;
-      case 1:
-      this.x+=this.speed;
-      break;
-      case 2:
-      this.y+=this.speed;
-      break;
-      case 3:
-      this.x-=this.speed;
-      break;
-      case 4:
-      this.y-=this.speed;
-      break;
-    }
-    if(Math.random()>0.9){
+   
+ 
+    if(Math.random()>0.92){
       this.shoot();
     }
-    if(this.life>=15&&Math.random()>0.99){
-        this.split();
+    if(this.life>=20&&Math.random()>0.999){
+     //   this.split();
     }
     if(this.life<15&&Math.random()>0.99){
         this.life+=1;
@@ -67,12 +86,13 @@ var Player = class Player {
     this.x = this.x + this.speed * cos(this.dir)
     this.y = this.y + this.speed * sin(this.dir)
   }
-  split(){
-      var clone=new Player(this.id, this.x, this.y,this.color )
+  split(){if(this.clonning)return;
+    this.clonning=true;
+      var clone=new Player(this.id, this.x, this.y,this.color)
       clone.life=Math.floor( (this.life/2)-1)
       this.life=Math.floor(this.life/2-1)
     players.push(clone);
-
+    this.clonning=false;
   }
   shoot(){
     bullets.push(new Bullet(this.id,this.x,this.y,this.dir))
