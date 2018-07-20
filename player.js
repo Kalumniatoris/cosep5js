@@ -1,10 +1,10 @@
 
 var manual=function(t){
   if (keyIsDown(LEFT_ARROW)) {
-   t.turnLeft();
+   t.turnLeft(3);
   }
   if (keyIsDown(RIGHT_ARROW)) {
-   t.turnRight();
+   t.turnRight(3);
   }
   if (keyIsDown(UP_ARROW)) {
    t.speedUp();
@@ -17,6 +17,9 @@ var manual=function(t){
    }
    if (keyIsDown(90)) {
     t.split();
+   }
+   if (keyIsDown(17)) {
+    t.stop();
    }
 }
 var Player = class Player {
@@ -31,18 +34,19 @@ var Player = class Player {
       this.speed=2;
       this.life=100;
       this.AI=AI;
-      this.maxSpeed=3;
+      this.maxSpeed=5;
       this.acceleration=0.2;
       this.bullets=[];
       this.clonning=false;
+      this.shootCtd=0;
     }
     setOthers(others){
       this.others=others;
     }
-  turnRight(angle=Math.PI*2/180){
-    this.dir+=angle;
-  }  turnLeft(angle=Math.PI*2/180){
-    this.dir-=angle;
+  turnRight(angle=1){
+    this.dir+=angle*Math.PI*2/360;
+  }  turnLeft(angle=1){
+    this.dir-=angle*Math.PI*2/360;
   }
   speedUp(){
     this.speed=Math.min(this.speed+this.acceleration,this.maxSpeed)
@@ -56,6 +60,9 @@ var Player = class Player {
     step(){
       while(this.bullets.length>maxbullets){
         this.bullets.splice(1,1);
+        }
+        if(this.shootCtd>0){
+          this.shootCtd-=1;
         }
          //this.wrap();
    this.border();
@@ -95,7 +102,10 @@ var Player = class Player {
     this.clonning=false;
   }
   shoot(){
+    if(this.shootCtd<=0){
     bullets.push(new Bullet(this.id,this.x,this.y,this.dir))
+    this.shootCtd=10;
+    }
   }
     wrap(){
       if(this.x>cwidth){
@@ -132,7 +142,8 @@ var Player = class Player {
         noStroke()
         rect(this.x-5,this.y-5,10,10);
        // text(tmp.id,tmp.x,tmp.y+20)
-       ellipse(this.x+10*cos(this.dir),this.y+10*sin(this.dir),2,2)
+       var hedist=8;
+       ellipse(this.x+hedist*cos(this.dir),this.y+hedist*sin(this.dir),8,8)
        stroke(222)
        text(this.life,this.x,this.y+15)
     }

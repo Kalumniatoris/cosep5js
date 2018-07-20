@@ -25,7 +25,9 @@ function mousePressed() {
 }
 
 function setup() {
-  for(var i=0;i<nplayers;i+=1){
+  players.push(new Player("Human",300,400,[Math.floor(Math.random()*255),Math.floor(Math.random()*255),Math.floor(Math.random()*255),200],manual ));
+  players[0].stop();
+  for(var i=0;i<nplayers-1;i+=1){
    // players.push(new Player("Player_"+i,width,height,[Math.floor(Math.random()*255)+5,Math.floor(Math.random()*255)+5,Math.floor(Math.random()*255)+5,100] ));
    // players.push(new Player("Player_"+i,width,height,[Math.floor(Math.random()*128)+128,Math.floor(Math.random()*10)+128,Math.floor(Math.random()*10)+128,100] ));
     addNewPlayer(Math.random()*width,Math.random()*height);
