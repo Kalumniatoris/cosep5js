@@ -1,4 +1,6 @@
 
+vAngle=60
+
 var manual=function(t){
   if (keyIsDown(LEFT_ARROW)) {
    t.turnLeft(3);
@@ -27,7 +29,7 @@ var Player = class Player {
     constructor(id,x, y, color,AI=undefined) {
       this.id=id;
       this.x = x;
-      this.y = y;
+      this.y = y; 
       this.color = color;
       this.color=color;
       this.dir=0;
@@ -144,6 +146,16 @@ var Player = class Player {
        // text(tmp.id,tmp.x,tmp.y+20)
        var hedist=8;
        ellipse(this.x+hedist*cos(this.dir),this.y+hedist*sin(this.dir),8,8)
+       alpha(20)
+       //stroke(222)
+      var viewAngle=((2*PI)/360)*vAngle;
+      var tmpcolor= this.color.slice(0);
+
+      tmpcolor[3]=30
+  //  console.log(tmpcolor)
+      fill(tmpcolor)
+       arc(this.x, this.y, 5000,5000, this.dir-viewAngle/2,this.dir+viewAngle/2, PIE);
+	
        stroke(222)
        text(this.life,this.x,this.y+15)
     }
