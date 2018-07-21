@@ -64,7 +64,7 @@ function draw() {
     stroke(avta(tmp.color,tmp2.color));
     strokeWeight(1);
     while(collideRectRect(tmp.x,tmp.y,10,10,tmp2.x,tmp2.y,10,10)){
-    if(tmp.x>tmp2.x && Math.abs(tmp.x-tmp2.x)<=10) tmp.x+=1
+    if(tmp.x>=tmp2.x && Math.abs(tmp.x-tmp2.x)<=10) tmp.x+=1
     if(tmp.x<tmp2.x && Math.abs(tmp.x-tmp2.x)<=10)tmp.x-=1
 
     if(tmp.y>tmp2.y && Math.abs(tmp.y-tmp2.y)<=10) tmp.y+=1
