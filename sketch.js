@@ -14,8 +14,8 @@ var maxbullets = 100;
 var air=(0.01)
 //var players=[new Player(10,10,30),new Player(40,20,100),new Player(40,100,1)];\
 
-addNewPlayer=function(x,y){
-  players.push(new Player("Player_"+newid,x,y,[Math.floor(Math.random()*255),Math.floor(Math.random()*255),Math.floor(Math.random()*255),200] ));
+addNewPlayer=function(x,y,AI=undefined){
+  players.push(new Player("Player_"+newid,x,y,[Math.floor(Math.random()*255),Math.floor(Math.random()*255),Math.floor(Math.random()*255),200],AI ));
  newid+=1;
 }
 function mousePressed() {

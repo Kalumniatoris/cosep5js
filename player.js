@@ -24,6 +24,18 @@ var manual=function(t){
     t.stop();
    }
 }
+
+var basicTurret=function(t){
+  t.stop();
+  if(t.playersIsee.length==0)return;
+  var target=t.playersIsee[0];
+  
+s = ( t.x+100*cos(t.dir) - t.x ) * ( target.x - t.y ) - ( t.y+100*sin(t.y) - t.y ) * ( target.y - t.x ); 
+if(s<0){t.turnLeft(1);}
+else {t.turnRight(1);}
+t.shoot();
+t.stop();
+}
 var Player = class Player {
   
     constructor(id,x, y, color,AI=undefined) {
@@ -41,6 +53,8 @@ var Player = class Player {
       this.bullets=[];
       this.clonning=false;
       this.shootCtd=0;
+
+      this.playersIsee=[];
     }
     setOthers(others){
       this.others=others;
@@ -69,6 +83,7 @@ var Player = class Player {
          //this.wrap();
    this.border();
    this.forward();
+   this.see();
    if(typeof this.AI =="function"){
        this.AI(this);
    }else{
@@ -138,8 +153,26 @@ var Player = class Player {
         this.y=0;
       }
     }
-  
+    see(){
+     //var hit = collidePointArc(mouseX, mouseY,this.x, this.y,width+height, this.dir, ((2*PI)/360)*vAngle);
+     
+     var tx=this.x;
+     var ty=this.y;
+     var td=this.dir;
+     this.playersIsee=[];
+      this.playersIsee=players.filter(function(p){
+   //    var px=player.x;
+      
+      return (tx!=p.x&&collidePointArc(p.x, p.y,tx, ty, width+height, td, ((2*PI)/360)*vAngle));
+       //return g
+     });
+     this.playersIsee=this.playersIsee.slice(0);
+     text(this.playersIsee.length,this.x-5,this.y-35);
+     
+    }
     draw(){
+     
+      text(this.playersIsee.length,this.x-5,this.y-35);
         fill(this.color)
         noStroke()
         rect(this.x-5,this.y-5,10,10);
@@ -154,7 +187,7 @@ var Player = class Player {
       tmpcolor[3]=30
   //  console.log(tmpcolor)
       fill(tmpcolor)
-       arc(this.x, this.y, 5000,5000, this.dir-viewAngle/2,this.dir+viewAngle/2, PIE);
+       arc(this.x, this.y, width+height,width+height, this.dir-viewAngle/2,this.dir+viewAngle/2, PIE);
 	
        stroke(222)
        text(this.life,this.x,this.y+15)
