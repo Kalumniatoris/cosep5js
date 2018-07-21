@@ -19,10 +19,17 @@
   
      
       // //this.life-=1;
-      // if(this.life<=0){
+      // 
       //   bullets=bullets.filter(function(n){
-      //     return n!==this;
-      //   })
+      //     return n.life>0;
+      // 
       // }
+    }
+    draw(){
+      stroke(255,255,255,10)
+      //rect(tmp.x-1,tmp.y-1,2,2)
+      stroke(255,255,255)
+      line(this.prevX,this.prevY,this.x,this.y)
+      
     }
   }

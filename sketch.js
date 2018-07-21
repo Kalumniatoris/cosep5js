@@ -57,9 +57,8 @@ function draw() {
   points.push([tmp.x,tmp.y]);
 
   tmp.draw();
-
-
   tmp.step();
+
   for(var ti=0;ti<i;ti+=1){
     var tmp2=players[ti];
     stroke(avta(tmp.color,tmp2.color));
@@ -102,9 +101,10 @@ function draw() {
    }else{
      text("OUT",mouseX,mouseY);
    }
+   text(bullets.length,mouseX+50,mouseY);
   for(var i=1;i<thull.length;i+=1){
     hpoly[i]=createVector()
-      line(thull[i-1][0],thull[i-1][1],thull[i][0],thull[i][1]);
+    line(thull[i-1][0],thull[i-1][1],thull[i][0],thull[i][1]);
   // // //  console.log(thull[i])
    }
   // strokeWeight(1)
@@ -135,11 +135,8 @@ function draw() {
   for(var i=0;i<bullets.length;i+=1){
    var tmp=bullets[i]
     
-     stroke(255,255,255,10)
-     //rect(tmp.x-1,tmp.y-1,2,2)
-     stroke(255,255,255)
-     line(tmp.prevX,tmp.prevY,tmp.x,tmp.y)
-     tmp.step()
+    tmp.draw();
+    tmp.step();
 
 
      for(var ti=0;ti<i;ti+=1){
@@ -155,7 +152,6 @@ function draw() {
    
         if(tmp.y>tmp2.y && Math.abs(tmp.y-tmp2.y)<=10) tmp.y+=1;
         if(tmp.y<tmp2.y && Math.abs(tmp.y-tmp2.y)<=10)tmp.y-=1;  
-        if(tmp.x<0||tmp.x>width||tmp.y<0||tmp.y>height)tmp.life=0;
        
         tmp2.life-=tmp.strength;
         ellipse(tmp.x,tmp.y,30,30);
@@ -165,7 +161,7 @@ function draw() {
        }
    
       }
-
+      if(tmp.x<0||tmp.x>width||tmp.y<0||tmp.y>height)tmp.life-=50;
       bullets=bullets.filter(function(bullet){return bullet.life>0})
       players=players.filter(function(player){return player.life>0})
 
@@ -180,6 +176,9 @@ function draw() {
       // }
 
    }
+
+
+
 }
 
 avta=function(a,b){
