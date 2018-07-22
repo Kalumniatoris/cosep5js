@@ -1,6 +1,35 @@
 
 vAngle=60
+var manual2=function(t,up,down,left,right,shoot,stop,slow,split){
+  return function(t){
+    sp=3;
+  if(keyIsDown(slow))sp=1/3;
+  if (keyIsDown(left)) {
+    
+   t.turnLeft(sp);
+  }
+  if (keyIsDown(right)) {
+   t.turnRight(sp);
+  }
+  if (keyIsDown(up)) {
+   t.speedUp();
+  }
+  if (keyIsDown(down)) {
+   t.speedDown();
+  }
+  if (keyIsDown(shoot)) {
+    t.shoot();
+   }
+   if (keyIsDown(split)) {
+    t.split();
+   }
+   if (keyIsDown(stop)) {
+    t.stop();
+   }
+  }
+}
 
+var man=function(t){manual2(t,UP_ARROW,DOWN_ARROW,LEFT_ARROW,RIGHT_ARROW,32,17,16,90)};
 var manual=function(t){
   sp=3;
   if(keyIsDown(16))sp=1/3;
@@ -30,7 +59,9 @@ var manual=function(t){
 
 var basicTurret=function(t){
   t.stop();
-  if(t.playersIsee.length==0)return;
+  if(t.playersIsee.length==0){
+    t.turnLeft();
+    return;}
   var target=t.playersIsee[0];
   var Ax=t.x;
   var Ay=t.y;
