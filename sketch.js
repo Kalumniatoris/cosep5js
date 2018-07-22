@@ -14,7 +14,7 @@ var maxbullets = 100;
 var air=(0.01)
 //var players=[new Player(10,10,30),new Player(40,20,100),new Player(40,100,1)];\
 function keyPressed() {
-  console.log(key)
+  //console.log(key)
   if (key === 'A') {
    addNewPlayer(mouseX,mouseY,basicTurret);
   } else if (key === 'S') {
