@@ -13,9 +13,19 @@ var bulletSpeed=10;
 var maxbullets = 100;
 var air=(0.01)
 //var players=[new Player(10,10,30),new Player(40,20,100),new Player(40,100,1)];\
-
-addNewPlayer=function(x,y,AI=undefined){
-  players.push(new Player("Player_"+newid,x,y,[Math.floor(Math.random()*255),Math.floor(Math.random()*255),Math.floor(Math.random()*255),200],AI ));
+function keyPressed() {
+  console.log(key)
+  if (key === 'A') {
+   addNewPlayer(mouseX,mouseY,basicTurret);
+  } else if (key === 'S') {
+    addNewPlayer(mouseX,mouseY,manual)
+  }
+  else if (key === 'D') {
+    addNewPlayer(mouseX,mouseY,basicTurret,"TURRETS")
+  }
+}
+addNewPlayer=function(x,y,AI=undefined,id="Player_"+newid){
+  players.push(new Player(id,x,y,[Math.floor(Math.random()*255),Math.floor(Math.random()*255),Math.floor(Math.random()*255),200],AI ));
  newid+=1;
 }
 function mousePressed() {

@@ -2,11 +2,14 @@
 vAngle=60
 
 var manual=function(t){
+  sp=3;
+  if(keyIsDown(16))sp=1/3;
   if (keyIsDown(LEFT_ARROW)) {
-   t.turnLeft(3);
+    
+   t.turnLeft(sp);
   }
   if (keyIsDown(RIGHT_ARROW)) {
-   t.turnRight(3);
+   t.turnRight(sp);
   }
   if (keyIsDown(UP_ARROW)) {
    t.speedUp();
@@ -29,12 +32,21 @@ var basicTurret=function(t){
   t.stop();
   if(t.playersIsee.length==0)return;
   var target=t.playersIsee[0];
-  
-s = ( t.x+100*cos(t.dir) - t.x ) * ( target.x - t.y ) - ( t.y+100*sin(t.y) - t.y ) * ( target.y - t.x ); 
-if(s<0){t.turnLeft(1);}
-else {t.turnRight(1);}
+  var Ax=t.x;
+  var Ay=t.y;
+  var Bx=t.x+100*cos(t.dir);
+  var By=t.y+100*sin(t.dir);
+  var X=target.x;
+  var Y=target.y;
+s =  ((Bx - Ax) * (Y - Ay) - (By - Ay) * (X - Ax))
+if(s<0){t.turnLeft(1/2);}
+else {t.turnRight(1/2);}
+//line(t.x,t.y,t.x+1000*cos(t.dir),t.y+1000*sin(t.dir))
 t.shoot();
 t.stop();
+if (keyIsDown(81)) {
+ console.log(s+" "+t.x+" "+t.y+" , "+target.x+" "+target.y+" "+target.id)
+ }
 }
 var Player = class Player {
   
@@ -107,8 +119,8 @@ var Player = class Player {
     }
 
   forward(){
-    this.x = this.x + this.speed * cos(this.dir)
-    this.y = this.y + this.speed * sin(this.dir)
+    this.x = Math.max(this.x + this.speed * cos(this.dir),0)
+    this.y = Math.max(this.y + this.speed * sin(this.dir),0)
   }
   split(){if(this.clonning)return;
     this.clonning=true;
@@ -146,10 +158,10 @@ var Player = class Player {
       if(this.y>cheight-10){
         this.y=cheight-10;
       }
-      if(this.x<0){
+      if(this.x<=0){
         this.x=0;
       }
-      if(this.y<0){
+      if(this.y<=0){
         this.y=0;
       }
     }
@@ -159,11 +171,12 @@ var Player = class Player {
      var tx=this.x;
      var ty=this.y;
      var td=this.dir;
+     var tid=this.id;
      this.playersIsee=[];
       this.playersIsee=players.filter(function(p){
    //    var px=player.x;
       
-      return (tx!=p.x&&collidePointArc(p.x, p.y,tx, ty, width+height, td, ((2*PI)/360)*vAngle));
+      return (tid!=p.id&&collidePointArc(p.x, p.y,tx, ty, width+height, td, ((2*PI)/360)*vAngle));
        //return g
      });
      this.playersIsee=this.playersIsee.slice(0);
