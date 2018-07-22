@@ -99,7 +99,7 @@ var Player = class Player {
    if(typeof this.AI =="function"){
        this.AI(this);
    }else{
- 
+    this.speed=1;
     this.dir+=(Math.PI*2)*(0.05-Math.random()*0.1);
   //  this.dir+=Math.random()/100;
    

@@ -27,6 +27,7 @@ function keyPressed() {
 addNewPlayer=function(x,y,AI=undefined,id="Player_"+newid){
   players.push(new Player(id,x,y,[Math.floor(Math.random()*255),Math.floor(Math.random()*255),Math.floor(Math.random()*255),200],AI ));
  newid+=1;
+ players[players.length-1].stop();
 }
 function mousePressed() {
  // players.push(new Player("Player_"+newid,mouseX,mouseY,[Math.floor(Math.random()*128)+128,Math.floor(Math.random()*10)+128,Mat h.floor(Math.random()*10)+128,100] ));
@@ -155,7 +156,7 @@ function draw() {
        if(typeof tmp2 !="undefined" && typeof tmp!="undefined"){
          stroke(255)
          
-         if(collideLineRect(tmp.prevX,tmp.prevY,tmp.x,tmp.y,tmp2.x,tmp2.y,10,10)&&tmp.creator!==tmp2.id){
+         if(collideLineRect(tmp.prevX,tmp.prevY,tmp.x,tmp.y,tmp2.x-5,tmp2.y-5,10,10)&&tmp.creator!==tmp2.id){
         // if(collideRectRect(tmp.x,tmp.y,2,2,tmp2.x,tmp2.y,10,10) && tmp.creator!==tmp2.id){
         if(tmp.x>tmp2.x && Math.abs(tmp.x-tmp2.x)<=10)tmp.x+=1;
         if(tmp.x<tmp2.x && Math.abs(tmp.x-tmp2.x)<=10)tmp.x-=1;
