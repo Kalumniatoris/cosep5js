@@ -216,6 +216,15 @@ var Player = class Player {
     }
     draw(){
      
+      var viewAngle=((2*PI)/360)*vAngle;
+      var tmpcolor= this.color.slice(0);
+
+      tmpcolor[3]=30
+  //  console.log(tmpcolor)
+      fill(tmpcolor)
+      noStroke();
+       arc(this.x, this.y, width+height,width+height, this.dir-viewAngle/2,this.dir+viewAngle/2, PIE);
+	
       text(this.playersIsee.length,this.x-5,this.y-35);
         fill(this.color)
         noStroke()
@@ -225,14 +234,6 @@ var Player = class Player {
        ellipse(this.x+hedist*cos(this.dir),this.y+hedist*sin(this.dir),8,8)
        alpha(20)
        //stroke(222)
-      var viewAngle=((2*PI)/360)*vAngle;
-      var tmpcolor= this.color.slice(0);
-
-      tmpcolor[3]=30
-  //  console.log(tmpcolor)
-      fill(tmpcolor)
-       arc(this.x, this.y, width+height,width+height, this.dir-viewAngle/2,this.dir+viewAngle/2, PIE);
-	
        stroke(222)
        text(this.life,this.x,this.y+15)
     }
