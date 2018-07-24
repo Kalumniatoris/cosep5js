@@ -176,19 +176,23 @@ function draw() {
 
           tmp2.life -= tmp.strength;
           ellipse(tmp.x, tmp.y, 30, 30);
+
+          
+    players = players.filter(function(player) {
+      return player.life > 0
+    })
         }
         // if(tmp2!=tmp.creator)tmp.life=0;
 
       }
 
     }
-    if (tmp.x < 0 || tmp.x > width || tmp.y < 0 || tmp.y > height) tmp.life -= 50;
-    bullets = bullets.filter(function(bullet) {
-      return bullet.life > 0
-    })
-    players = players.filter(function(player) {
-      return player.life > 0
-    })
+    if (tmp.x < 0 || tmp.x > width || tmp.y < 0 || tmp.y > height){ tmp.life -= 50;
+      bullets = bullets.filter(function(bullet) {
+        return bullet.life > 0
+      })
+    }
+  
 
     while (bullets.length > maxbullets) {
       bullets.splice(1, 1);
