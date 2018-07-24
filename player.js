@@ -101,6 +101,7 @@ var basicTurret = function(t) {
   if (keyIsDown(81)) {
     console.log(s + " " + t.x + " " + t.y + " , " + target.x + " " + target.y + " " + target.id)
   }
+ 
 }
 var Player = class Player {
 
@@ -164,8 +165,8 @@ var Player = class Player {
       if (Math.random() > 0.92) {
         this.shoot();
       }
-      if (this.life >= 20 && Math.random() > 0.999) {
-        //   this.split();
+      if (this.life >= 20 && Math.random() > 0.99) {
+        // this.split();
       }
       if (this.life < 15 && Math.random() > 0.99) {
         this.life += 1;
@@ -184,13 +185,13 @@ var Player = class Player {
   
     this.clonning = true;
     var tai=this.AI
-    var clone = new Player(this.id, this.x+5, this.y, this.color,tai)
+    var clone = new Player(this.id, this.x+Math.random()-0.5, this.y+Math.random()-0.5, this.color,tai)
    // console.log(clone)
 
     clone.life = Math.floor((this.life / 2))
     this.life = Math.floor(this.life / 2 - 1)
     clone.speed=this.speed;
-    clone.dir=this.dir+Math.random()*0.1;
+    clone.dir=this.dir+(Math.PI*(Math.random()-0.5)/5)
     if(clone.life>=1)players.push(clone);
     this.clonning = false;
     
