@@ -180,12 +180,12 @@ var Player = class Player {
     this.x = Math.max(this.x + this.speed * cos(this.dir), 0)
     this.y = Math.max(this.y + this.speed * sin(this.dir), 0)
   }
-  split() {
+  split(AI=this.AI) {
     if (this.timeToClone <= 0) {
   
     this.clonning = true;
-    var tai=this.AI
-    var clone = new Player(this.id, this.x+Math.random()-0.5, this.y+Math.random()-0.5, this.color,tai)
+    
+    var clone = new Player(this.id, this.x+Math.random()-0.5, this.y+Math.random()-0.5, this.color,AI)
    // console.log(clone)
 
     clone.life = Math.floor((this.life / 2))
