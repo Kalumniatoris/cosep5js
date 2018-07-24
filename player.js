@@ -67,7 +67,7 @@ var burstMine=function(t){
   ellipse(t.x,t.y,range*2,range*2)
   t.vAngle=180
   t.turnRight(180);
-  t.life+=(100-this.life)/2;
+  t.life+=(50-this.life)/2;
   text("X",t.x,t.y);
   if(t.playersIsee.length==0)return;
   for(var i=0;i<t.playersIsee.length;i+=1){

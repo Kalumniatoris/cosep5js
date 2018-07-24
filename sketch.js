@@ -27,7 +27,7 @@ function keyPressed() {
     addNewPlayer(mouseX, mouseY, basicTurret, "TURRETS")
   }
   else if (key === 'F') {
-    addNewPlayer(mouseX, mouseY, burstMine )
+    addNewPlayer(mouseX, mouseY, burstMine, "TURRETS" )
   }
 }
 addNewPlayer = function(x, y, AI = undefined, id = "Player_" + newid) {
