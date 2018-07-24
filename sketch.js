@@ -1,3 +1,9 @@
+var g={
+  vAngle:30,
+  air:(0.01),
+  
+}
+
 var k;
 var x = 2;
 var cwidth = 600;
@@ -9,7 +15,7 @@ var otts = [];
 var nplayers = 1;
 var bulletSpeed = 10;
 var maxbullets = 100;
-var air = (0.01)
+//var air = (0.01)
   //var players=[new Player(10,10,30),new Player(40,20,100),new Player(40,100,1)];\
 function keyPressed() {
   //console.log(key)
@@ -19,6 +25,9 @@ function keyPressed() {
     addNewPlayer(mouseX, mouseY, manual)
   } else if (key === 'D') {
     addNewPlayer(mouseX, mouseY, basicTurret, "TURRETS")
+  }
+  else if (key === 'F') {
+    addNewPlayer(mouseX, mouseY, burstMine )
   }
 }
 addNewPlayer = function(x, y, AI = undefined, id = "Player_" + newid) {
@@ -90,34 +99,36 @@ function draw() {
 
   }
 
-  ///HULL
-  var thull = hull(points, (width + height) / 4);
-  var thull = hull(points, (width + height) / 4);
+  // ///HULL
+  // var thull = hull(points, (width + height) / 4);
+  // var thull = hull(points, (width + height) / 4);
 
 
 
-  // // stroke(255);
-  // // strokeWeight(10)
-  var hpoly = [];
+  // // // stroke(255);
+  // // // strokeWeight(10)
+  // var hpoly = [];
 
-  for (var i = 0; i < thull.length; i += 1) {
-    hpoly[i] = createVector(thull[i][0], thull[i][1]);
-    // console.log(hpoly[i])
-  }
-  var inhull = collidePointPoly(mouseX, mouseY, hpoly);
-  stroke(200);
-  if (inhull) {
-    text("IN", mouseX, mouseY);
-  } else {
-    text("OUT", mouseX, mouseY);
-  }
-  text(bullets.length, mouseX + 50, mouseY);
-  for (var i = 1; i < thull.length; i += 1) {
-    hpoly[i] = createVector()
-    line(thull[i - 1][0], thull[i - 1][1], thull[i][0], thull[i][1]);
-    // // //  console.log(thull[i])
-  }
+  // for (var i = 0; i < thull.length; i += 1) {
+  //   hpoly[i] = createVector(thull[i][0], thull[i][1]);
+  //   // console.log(hpoly[i])
+  // }
+  // var inhull = collidePointPoly(mouseX, mouseY, hpoly);
+  // stroke(200);
+  // if (inhull) {
+  //   text("IN", mouseX, mouseY);
+  // } else {
+  //   text("OUT", mouseX, mouseY);
+  // }
+  
+  // for (var i = 1; i < thull.length; i += 1) {
+  //   hpoly[i] = createVector()
+  //   line(thull[i - 1][0], thull[i - 1][1], thull[i][0], thull[i][1]);
+  //   // // //  console.log(thull[i])
+  // }
   // strokeWeight(1)
+
+  text(bullets.length, mouseX + 50, mouseY);
   fill(255);
   //createP("a");noFill()//
 

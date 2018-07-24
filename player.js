@@ -1,4 +1,4 @@
-vAngle = 60
+//vAngle = 60
 var manual2 = function(t, up, down, left, right, shoot, stop, slow, split) {
   return function(t) {
     sp = 3;
@@ -58,27 +58,44 @@ var manual = function(t) {
     t.stop();
   }
 }
+var isLeft=function(Ax,Ay,Bx,By,X,Y){
+  return  ((Bx - Ax) * (Y - Ay) - (By - Ay) * (X - Ax))<0
+}
+var burstMine=function(t){
+  var range=40;
+  fill(254,50)
+  ellipse(t.x,t.y,range*2,range*2)
+  t.vAngle=180
+  t.turnRight(180);
+  t.life+=(100-this.life)/2;
+  text("X",t.x,t.y);
+  if(t.playersIsee.length==0)return;
+  for(var i=0;i<t.playersIsee.length;i+=1){
+    if(t.playersIsee[i].distance<range){
+    rect(t.x-range,t.y-range,range*2,range*2)
+    for(var q=0;q<36;q+=1){
+    bullets.push(new Bullet(0,t.x+10*cos((q*10*Math.PI)/180),t.y+10*sin((q*10*Math.PI)/180),(q*10*Math.PI)/180,1));
+    }
+    t.life=-10;
+  }
+  }
+}
 
 var basicTurret = function(t) {
+
   t.stop();
   if (t.playersIsee.length == 0) {
     t.turnLeft();
     return;
   }
   var target = t.playersIsee[0];
-  var Ax = t.x;
-  var Ay = t.y;
-  var Bx = t.x + 100 * cos(t.dir);
-  var By = t.y + 100 * sin(t.dir);
-  var X = target.x;
-  var Y = target.y;
-  s = ((Bx - Ax) * (Y - Ay) - (By - Ay) * (X - Ax))
-  if (s < 0) {
-    t.turnLeft(1 / 2);
-  } else {
-    t.turnRight(1 / 2);
+  if(target.angle>0){
+    t.turnLeft();
   }
-  //text(s,t.x,t.y+30)
+  else{
+    t.turnRight();
+  }
+
   t.shoot();
   t.stop();
   if (keyIsDown(81)) {
@@ -87,7 +104,7 @@ var basicTurret = function(t) {
 }
 var Player = class Player {
 
-  constructor(id, x, y, color, AI = undefined) {
+  constructor(id, x, y, color, AI = undefined, vAngle=g.vAngle) {
     this.id = id;
     this.x = x;
     this.y = y;
@@ -102,7 +119,7 @@ var Player = class Player {
     this.bullets = [];
     this.clonning = false;
     this.shootCtd = 0;
-
+    this.vAngle=vAngle;
     this.playersIsee = [];
   }
   setOthers(others) {
@@ -211,30 +228,59 @@ var Player = class Player {
     var ty = this.y;
     var td = this.dir;
     var tid = this.id;
+    var tva=this.vAngle;
     this.playersIsee = [];
     var tmpinfo=[];
     this.playersIsee = players.filter(function(p) {
       //    var px=player.x;
 
-      return (tid != p.id && collidePointArc(p.x, p.y, tx, ty, width + height, td, ((2 * PI) / 360) * vAngle));
+      return (tid != p.id && collidePointArc(p.x, p.y, tx, ty, width + height, td, ((2 * PI) / 360) * tva));
       //return g
     });
     for(var i=0;i<this.playersIsee.length;i+=1){
-
+      var id=this.playersIsee[i].id;
+      var px=this.playersIsee[i].x;
+      var py=this.playersIsee[i].y;
+      var pd=this.playersIsee[i].dir;
+      var sx=10*cos(this.dir);
+      var sy=10*sin(this.dir);
+      var cx=px-this.x;
+      var cy=py-this.y;
+      var tma= (cx * sx + cy * sy) / ( sqrt(cx*cx + cy*cy) * sqrt(sx*sx + sy*sy) );
+      //line(sx+this.x,sy+this.y,cx+this.x,cy+this.y)
+      var angle;
+      if(isLeft(this.x,this.y,this.x+10*cos(this.dir),this.y+10*sin(this.dir),px,py)){
+      angle=Math.acos(tma);}
+      else{
+        angle=-Math.acos(tma);
+      }
+      angle=180*(angle/Math.PI)
+      //s = ((Bx - Ax) * (Y - Ay) - (By - Ay) * (X - Ax))
+      var distance = Math.sqrt(Math.pow((px-this.x),2)+Math.pow(py-this.y,2));
+      tmpinfo.push(new SeenPlayer(id,distance,angle,pd))
+      fill(200);
+      noStroke()
+     // text(angle,this.x,this.y+50)
+      if (keyIsDown(86)) {    
+      
+      console.log(cx+":"+cy+"   "+angle)
+      }
     }
-    this.playersIsee = this.playersIsee.slice(0);
+    this.playersIsee=tmpinfo.slice(0);
+   // this.playersIsee = this.playersIsee.slice(0);
     text(this.playersIsee.length, this.x - 5, this.y - 35);
 
   }
   draw() {
 
-    var viewAngle = ((2 * PI) / 360) * vAngle;
+    var viewAngle = ((2 * PI) / 360) * this.vAngle;
     var tmpcolor = this.color.slice(0);
 
     tmpcolor[3] = 30
       //  console.log(tmpcolor)
     fill(tmpcolor)
     noStroke();
+    if(keyIsDown(192))
     arc(this.x, this.y, width + height, width + height, this.dir - viewAngle / 2, this.dir + viewAngle / 2, PIE);
 
     text(this.playersIsee.length, this.x - 5, this.y - 35);

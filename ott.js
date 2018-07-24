@@ -1,3 +1,4 @@
+
 var Ott = class Ott {
   constructor(id, x, y, color = 200) {
     this.id = id;
@@ -22,19 +23,19 @@ var Ott = class Ott {
   ai() {}
   air() {
     if (this.fx > 0) {
-      this.fx = Math.max(this.fx - air, 0)
+      this.fx = Math.max(this.fx - g.air, 0)
     }
 
     if (this.fx < 0) {
-      this.fx = Math.min(this.fx + air, 0)
+      this.fx = Math.min(this.fx + g.air, 0)
     }
 
     if (this.fy > 0) {
-      this.fy = Math.max(this.fy - air, 0)
+      this.fy = Math.max(this.fy - g.air, 0)
     }
 
     if (this.fy < 0) {
-      this.fy = Math.min(this.fy + air, 0)
+      this.fy = Math.min(this.fy + g.air, 0)
     }
   }
   wrap() {
