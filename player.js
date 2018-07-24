@@ -121,6 +121,7 @@ var Player = class Player {
     this.shootCtd = 0;
     this.vAngle=vAngle;
     this.playersIsee = [];
+    this.timeToClone=100;
   }
   setOthers(others) {
     this.others = others;
@@ -141,6 +142,7 @@ var Player = class Player {
     this.speed = 0;
   }
   step() {
+    this.timeToClone-=1;
     while (this.bullets.length > maxbullets) {
       this.bullets.splice(1, 1);
     }
@@ -178,13 +180,22 @@ var Player = class Player {
     this.y = Math.max(this.y + this.speed * sin(this.dir), 0)
   }
   split() {
-    if (this.clonning) return;
+    if (this.timeToClone <= 0) {
+  
     this.clonning = true;
-    var clone = new Player(this.id, this.x, this.y, this.color)
-    clone.life = Math.floor((this.life / 2) - 1)
+    var tai=this.AI
+    var clone = new Player(this.id, this.x+5, this.y, this.color,tai)
+   // console.log(clone)
+
+    clone.life = Math.floor((this.life / 2))
     this.life = Math.floor(this.life / 2 - 1)
-    players.push(clone);
+    clone.speed=this.speed;
+    clone.dir=this.dir+Math.random()*0.1;
+    if(clone.life>=1)players.push(clone);
     this.clonning = false;
+    
+    this.timeToClone=100;
+    }
   }
   shoot() {
     if (this.shootCtd <= 0) {
