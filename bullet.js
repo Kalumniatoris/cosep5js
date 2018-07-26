@@ -11,6 +11,8 @@ var Bullet = class Bullet {
     this.prevY = this.y;
   }
   step() {
+    if(g.bulletMode==0){    this.border();}
+    if(g.bulletMode==1){ this.wrap();}
     this.prevX = this.x;
     this.prevY = this.y;
     this.x = this.x + this.speed * cos(this.dir);
@@ -24,11 +26,42 @@ var Bullet = class Bullet {
     // 
     // }
   }
+
+  
+  wrap() {
+    if (this.x > cwidth) {
+      this.x = 0;
+    }
+    if (this.y > cheight) {
+      this.y = 0;
+    }
+    if (this.x < 0) {
+      this.x = cwidth;
+    }
+    if (this.y < 0) {
+      this.y = cheight;
+    }
+  }
+
+  border() {
+    if (this.x > cwidth - 10) {
+      this.life-=100;
+    }
+    if (this.y > cheight - 10) {
+      this.life-=100;
+    }
+    if (this.x <= 0) {
+      this.life-=100;
+    }
+    if (this.y <= 0) {
+      this.life-=100;
+    }
+  }
   draw() {
-    stroke(255, 255, 255, 10)
+    buffer.stroke(255, 255, 255, 10)
       //rect(tmp.x-1,tmp.y-1,2,2)
-    stroke(255, 255, 255)
-    line(this.prevX, this.prevY, this.x, this.y)
+      buffer.stroke(255, 255, 255)
+      buffer.line(this.prevX, this.prevY, this.x, this.y)
 
   }
 }

@@ -75,10 +75,10 @@ var Ott = class Ott {
   }
   draw() {
     //stroke(this.color);
-    fill(this.color);
-    noStroke();
-    ellipse(this.x, this.y, Math.abs(this.fx) + 3, Math.abs(this.fy) + 3);
-    stroke(128);
+    buffer.fill(this.color);
+    buffer.noStroke();
+    buffer.ellipse(this.x, this.y, Math.abs(this.fx) + 3, Math.abs(this.fy) + 3);
+    buffer.stroke(128);
   }
 
 }

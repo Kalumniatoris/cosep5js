@@ -68,7 +68,7 @@ var burstMine=function(t){
   t.vAngle=180
   t.turnRight(180);
   t.life+=(50-this.life)/2;
-  text("X",t.x,t.y);
+  buffer.text("X",t.x,t.y);
   if(t.playersIsee.length==0)return;
   for(var i=0;i<t.playersIsee.length;i+=1){
     if(t.playersIsee[i].distance<range){
@@ -280,7 +280,6 @@ var Player = class Player {
     }
     this.playersIsee=tmpinfo.slice(0);
    // this.playersIsee = this.playersIsee.slice(0);
-    text(this.playersIsee.length, this.x - 5, this.y - 35);
 
   }
   draw() {
@@ -290,22 +289,24 @@ var Player = class Player {
 
     tmpcolor[3] = 30
       //  console.log(tmpcolor)
-    fill(tmpcolor)
-    noStroke();
+      buffer.fill(tmpcolor)
+      buffer.noStroke();
     if(keyIsDown(192))
-    arc(this.x, this.y, width + height, width + height, this.dir - viewAngle / 2, this.dir + viewAngle / 2, PIE);
+    buffer.arc(this.x, this.y, width + height, width + height, this.dir - viewAngle / 2, this.dir + viewAngle / 2, PIE);
 
-    text(this.playersIsee.length, this.x - 5, this.y - 35);
-    fill(this.color)
-    noStroke()
-    rect(this.x - 5, this.y - 5, 10, 10);
+    buffer.text(this.playersIsee.length, this.x - 5, this.y - 35);
+    buffer.fill(this.color)
+    buffer.noStroke()
+    buffer.rect(this.x - 5, this.y - 5, 10, 10);
     // text(tmp.id,tmp.x,tmp.y+20)
     var hedist = 8;
-    ellipse(this.x + hedist * cos(this.dir), this.y + hedist * sin(this.dir), 8, 8)
-    alpha(20)
+    buffer.ellipse(this.x + hedist * cos(this.dir), this.y + hedist * sin(this.dir), 8, 8)
+    buffer.alpha(20)
       //stroke(222)
-    stroke(222)
-    text(this.life, this.x, this.y + 15)
+      buffer.stroke(222)
+      buffer.text(this.life, this.x, this.y + 15)
+      buffer.text(this.playersIsee.length, this.x - 5, this.y - 35);
+
   }
 
 
