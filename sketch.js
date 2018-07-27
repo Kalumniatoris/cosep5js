@@ -1,7 +1,8 @@
 var g={
   vAngle:30,
   air:(0.01),
-  bulletMode:0 //0: border, 1:wrap;
+  bulletMode:0, //0: border, 1:wrap;
+  ldelay:25
 }
 
 var k;
@@ -64,9 +65,11 @@ function setup() {
   createCanvas(cwidth, cheight);
   buffer=createGraphics(cwidth,cheight);
     buffer=createGraphics(cwidth,cheight);
-    window.setInterval(logic,30);
+    //window.setInterval(logic,30);
    //window.setInterval(pdraw,2);
-   window.setInterval(toloop,31);
+  // window.setInterval(toloop,31);
+  toloop();
+  logic();
    noLoop();
    // frameRate(30)
 }
@@ -78,6 +81,7 @@ fill(200);
 noStroke();
 text(Math.round(frameRate()),10,30);
 pdraw();
+setTimeout(toloop,g.ldelay);
 }
 function draw() {
  // pdraw();
@@ -143,7 +147,7 @@ function logic(){
 
 
     }
-
+  
   }
 
   // ///HULL
@@ -252,7 +256,7 @@ function logic(){
 
   }
 
-
+  setTimeout(logic,g.ldelay);
 
 }
 

@@ -62,21 +62,26 @@ var isLeft=function(Ax,Ay,Bx,By,X,Y){
   return  ((Bx - Ax) * (Y - Ay) - (By - Ay) * (X - Ax))<0
 }
 var burstMine=function(t){
+  var explode=function(){
+    for(var q=0;q<36;q+=1){
+      bullets.push(new Bullet(0,t.x+10*cos((q*10*Math.PI)/180),t.y+10*sin((q*10*Math.PI)/180),(q*10*Math.PI)/180,1));
+      }
+      t.life=-10;
+  }
+  if(t.life<=10&&Math.random()<0.01){explode();}
   var range=40;
   fill(254,50)
   ellipse(t.x,t.y,range*2,range*2)
   t.vAngle=180
   t.turnRight(180);
-  t.life+=(50-this.life)/2;
+  //t.life+=(50-this.life)/2;
   buffer.text("X",t.x,t.y);
   if(t.playersIsee.length==0)return;
   for(var i=0;i<t.playersIsee.length;i+=1){
     if(t.playersIsee[i].distance<range){
     rect(t.x-range,t.y-range,range*2,range*2)
-    for(var q=0;q<36;q+=1){
-    bullets.push(new Bullet(0,t.x+10*cos((q*10*Math.PI)/180),t.y+10*sin((q*10*Math.PI)/180),(q*10*Math.PI)/180,1));
-    }
-    t.life=-10;
+    explode();
+    
   }
   }
 }
