@@ -225,7 +225,7 @@ function logic(){
           var tmptmplife=tmp2.life;
           tmp2.life -= tmp.strength;
           tmp.life-=tmptmplife;
-          tmp.creator.experience+=1;
+          tmp.creator.experience+=Math.max(1,tmp2.level-tmp.creator.level+1);
           if(tmp2.life<=0){
             tmp.creator.experience+=Math.floor((10*tmp2.level+tmp2.experience)/2);
           }
