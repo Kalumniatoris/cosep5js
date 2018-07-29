@@ -227,7 +227,7 @@ function logic(){
           tmp.life-=tmptmplife;
           tmp.creator.experience+=1;
           if(tmp2.life<=0){
-            tmp.creator.experience+=10;
+            tmp.creator.experience+=Math.floor((10*tmp2.level+tmp2.experience)/2);
           }
           buffer.ellipse(tmp.x, tmp.y, 30, 30);
 
