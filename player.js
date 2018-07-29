@@ -201,7 +201,7 @@ var Player = class Player {
     this.y = Math.max(this.y + this.speed * sin(this.dir), 0)
   }
   split(AI=this.AI) {
-    if (this.timeToClone <= 0) {
+    if (this.timeToClone <= 0&&this.level>1) {
   
     this.clonning = true;
     
@@ -212,9 +212,12 @@ var Player = class Player {
     this.life = Math.floor(this.life / 2 - 1)
     clone.speed=this.speed;
     clone.dir=this.dir+(Math.PI*(Math.random()-0.5)/5)
+    // for(var q=0;q<(this.level/2);q+=1){
+    //   clone.experience+=10*q;
+    // }
     if(clone.life>=1)players.push(clone);
     this.clonning = false;
-    
+    this.level-=1;
     this.timeToClone=100;
     }
   }
