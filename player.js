@@ -158,6 +158,13 @@ var Player = class Player {
    this.experience-=this.level*10;
    this.level+=1;
   }
+  levelDown(){
+    this.shootDelay/=0.9;
+    this.maxSpeed-=0.5;
+    this.bulletSpeed-=1;
+   // this.experience=this.level*10;
+    this.level-=1;
+  }
   step() {
     if(this.experience>10*this.level){
      
@@ -212,12 +219,12 @@ var Player = class Player {
     this.life = Math.floor(this.life / 2 - 1)
     clone.speed=this.speed;
     clone.dir=this.dir+(Math.PI*(Math.random()-0.5)/5)
-    // for(var q=0;q<(this.level/2);q+=1){
-    //   clone.experience+=10*q;
-    // }
+    for(var q=0;q<Math.floor(this.level/2);q+=1){
+      clone.experience+=10*q;
+    }
     if(clone.life>=1)players.push(clone);
     this.clonning = false;
-    this.level-=1;
+    this.levelDown();
     this.timeToClone=100;
     }
   }
