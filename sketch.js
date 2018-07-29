@@ -215,7 +215,7 @@ function logic(){
       if (typeof tmp2 != "undefined" && typeof tmp != "undefined") {
         buffer.stroke(255)
 
-        if (collideLineRect(tmp.prevX, tmp.prevY, tmp.x, tmp.y, tmp2.x - 5, tmp2.y - 5, 10, 10) && tmp.creator !== tmp2.id) {
+        if (collideLineRect(tmp.prevX, tmp.prevY, tmp.x, tmp.y, tmp2.x - 5, tmp2.y - 5, 10, 10) && tmp.creator.id !== tmp2.id) {
           // if(collideRectRect(tmp.x,tmp.y,2,2,tmp2.x,tmp2.y,10,10) && tmp.creator!==tmp2.id){
           if (tmp.x > tmp2.x && Math.abs(tmp.x - tmp2.x) <= 10) tmp.x += 1;
           if (tmp.x < tmp2.x && Math.abs(tmp.x - tmp2.x) <= 10) tmp.x -= 1;
@@ -225,6 +225,10 @@ function logic(){
           var tmptmplife=tmp2.life;
           tmp2.life -= tmp.strength;
           tmp.life-=tmptmplife;
+          tmp.creator.experience+=1;
+          if(tmp2.life<=0){
+            tmp.creator.experience+=10;
+          }
           buffer.ellipse(tmp.x, tmp.y, 30, 30);
 
           

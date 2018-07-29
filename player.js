@@ -128,6 +128,10 @@ var Player = class Player {
     this.vAngle=vAngle;
     this.playersIsee = [];
     this.timeToClone=100;
+    this.experience=0;
+    this.level=1;
+    this.shootDelay=10;
+    this.bulletSpeed=20;
   }
   setOthers(others) {
     this.others = others;
@@ -147,7 +151,18 @@ var Player = class Player {
   stop() {
     this.speed = 0;
   }
+  levelUp(){
+   this.shootDelay*=0.9;
+   this.maxSpeed+=0.5;
+   this.bulletSpeed+=1;
+   this.experience-=this.level*10;
+   this.level+=1;
+  }
   step() {
+    if(this.experience>10*this.level){
+     
+      this.levelUp();
+    }
     this.timeToClone-=1;
     while (this.bullets.length > maxbullets) {
       this.bullets.splice(1, 1);
@@ -205,8 +220,8 @@ var Player = class Player {
   }
   shoot() {
     if (this.shootCtd <= 0) {
-      bullets.push(new Bullet(this.id, this.x, this.y, this.dir))
-      this.shootCtd = 10;
+      bullets.push(new Bullet(this, this.x, this.y, this.dir,this.bulletSpeed))
+      this.shootCtd = this.shootDelay;
     }
   }
   wrap() {
@@ -311,7 +326,7 @@ var Player = class Player {
       buffer.stroke(222)
       buffer.text(this.life, this.x, this.y + 15)
       buffer.text(this.playersIsee.length, this.x - 5, this.y - 35);
-
+      buffer.text(this.level+": "+this.experience,this.x-5,this.y-20);
   }
 
 
