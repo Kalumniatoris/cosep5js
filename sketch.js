@@ -2,7 +2,8 @@ var g={
   vAngle:30,
   air:(0.01),
   bulletMode:0, //0: border, 1:wrap;
-  ldelay:25
+  ldelay:25,
+  sPower:5
 }
 
 var k;
@@ -32,6 +33,9 @@ function keyPressed() {
   else if (key === 'F') {
     addNewPlayer(mouseX, mouseY, burstMine, "TURRETS" )
   }
+  else if (key === 'R') {
+    addNewPlayer(mouseX, mouseY)
+  }
 }
 addNewPlayer = function(x, y, AI = undefined, id = "Player_" + newid) {
   players.push(new Player(id, x, y, [Math.floor(Math.random() * 255), Math.floor(Math.random() * 255), Math.floor(Math.random() * 255), 200], AI));
@@ -39,10 +43,17 @@ addNewPlayer = function(x, y, AI = undefined, id = "Player_" + newid) {
   players[players.length - 1].stop();
 }
 
-function mousePressed() {
+function shootMouse() {
   // players.push(new Player("Player_"+newid,mouseX,mouseY,[Math.floor(Math.random()*128)+128,Math.floor(Math.random()*10)+128,Mat h.floor(Math.random()*10)+128,100] ));
-  addNewPlayer(mouseX, mouseY);
-
+ // addNewPlayer(mouseX, mouseY);
+ players.filter(function(k){return k.AI==manual}).forEach(function(p){
+//console.log(p);
+var px=p.x-mouseX;
+var py=p.y-mouseY;
+var tmpDIR=Math.atan2(-py,-px);
+p.shootDir(tmpDIR);
+//bullets.push(new Bullet(p,p.x,p.y,tmpDIR,p.bulletSpeed));
+ });
 }
 
 function setup() {
@@ -74,7 +85,9 @@ function setup() {
    // frameRate(30)
 }
 function toloop(){
-
+if(mouseIsPressed){
+  shootMouse();
+}
 image(buffer,0,0);
 stroke(200);
 fill(200);
@@ -215,7 +228,14 @@ function logic(){
       if (typeof tmp2 != "undefined" && typeof tmp != "undefined") {
         buffer.stroke(255)
 
-        if (collideLineRect(tmp.prevX, tmp.prevY, tmp.x, tmp.y, tmp2.x - 5, tmp2.y - 5, 10, 10) && tmp.creator.id !== tmp2.id) {
+        if(collideRectRect(tmp.x-tmp.strength/2,tmp.y-tmp.strength/2,tmp.strength,tmp.strength,tmp2.x - 5, tmp2.y - 5, 10, 10)){
+          console.log("!!!!!");
+        }
+        if (
+         ( collideLineRect(tmp.prevX, tmp.prevY, tmp.x, tmp.y, tmp2.x - 5, tmp2.y - 5, 10, 10)||
+         collideRectRect(tmp.x-tmp.strength/2,tmp.y-tmp.strength/2,tmp.strength,tmp.strength,tmp2.x - 5, tmp2.y - 5, 10, 10)
+        )
+        && tmp.creator.id !== tmp2.id) {
           // if(collideRectRect(tmp.x,tmp.y,2,2,tmp2.x,tmp2.y,10,10) && tmp.creator!==tmp2.id){
           if (tmp.x > tmp2.x && Math.abs(tmp.x - tmp2.x) <= 10) tmp.x += 1;
           if (tmp.x < tmp2.x && Math.abs(tmp.x - tmp2.x) <= 10) tmp.x -= 1;

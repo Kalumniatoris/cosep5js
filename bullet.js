@@ -58,8 +58,9 @@ var Bullet = class Bullet {
     }
   }
   draw() {
+    fill(this.creator.color);
     buffer.stroke(255, 255, 255, 10)
-      //rect(tmp.x-1,tmp.y-1,2,2)
+      rect(this.x-this.strength/6,this.y-this.strength/6,this.strength/3,this.strength/3)
       buffer.stroke(255, 255, 255)
       buffer.line(this.prevX, this.prevY, this.x, this.y)
 
