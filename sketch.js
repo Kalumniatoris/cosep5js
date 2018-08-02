@@ -233,7 +233,7 @@ function logic(){
         }
         if (
          ( collideLineRect(tmp.prevX, tmp.prevY, tmp.x, tmp.y, tmp2.x - 5, tmp2.y - 5, 10, 10)||
-         collideRectRect(tmp.x-tmp.strength/2,tmp.y-tmp.strength/2,tmp.strength,tmp.strength,tmp2.x - 5, tmp2.y - 5, 10, 10)
+         collideRectRect(tmp.x-tmp.strength/6,tmp.y-tmp.strength/6,tmp.strength/3,tmp.strength/3,tmp2.x - 5, tmp2.y - 5, 10, 10)
         )
         && tmp.creator.id !== tmp2.id) {
           // if(collideRectRect(tmp.x,tmp.y,2,2,tmp2.x,tmp2.y,10,10) && tmp.creator!==tmp2.id){
