@@ -58,7 +58,10 @@ var Bullet = class Bullet {
     }
   }
   draw() {
-    fill(this.creator.color);
+    if(this.creator.color!=undefined) {   fill(this.creator.color);}
+    else{
+      fill(255)
+    }
     buffer.stroke(255, 255, 255, 10)
       rect(this.x-this.strength/6,this.y-this.strength/6,this.strength/3,this.strength/3)
       buffer.stroke(255, 255, 255)

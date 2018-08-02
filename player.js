@@ -127,6 +127,7 @@ var Player = class Player {
     }
   }
   shootDir(dir,power=g.sPower) {
+    if(power>g.maxSPower)power=g.maxSPower
     if (this.shootCtd <= 0) {
       var b=new Bullet(this, this.x, this.y, dir,this.bulletSpeed/Math.pow(power,1.2))
       b.life*=power;

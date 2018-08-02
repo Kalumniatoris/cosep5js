@@ -3,7 +3,8 @@ var g={
   air:(0.01),
   bulletMode:0, //0: border, 1:wrap;
   ldelay:25,
-  sPower:5
+  sPower:5,
+  maxSPower:100
 }
 
 var k;
@@ -228,9 +229,7 @@ function logic(){
       if (typeof tmp2 != "undefined" && typeof tmp != "undefined") {
         buffer.stroke(255)
 
-        if(collideRectRect(tmp.x-tmp.strength/2,tmp.y-tmp.strength/2,tmp.strength,tmp.strength,tmp2.x - 5, tmp2.y - 5, 10, 10)){
-          console.log("!!!!!");
-        }
+      
         if (
          ( collideLineRect(tmp.prevX, tmp.prevY, tmp.x, tmp.y, tmp2.x - 5, tmp2.y - 5, 10, 10)||
          collideRectRect(tmp.x-tmp.strength/6,tmp.y-tmp.strength/6,tmp.strength/3,tmp.strength/3,tmp2.x - 5, tmp2.y - 5, 10, 10)
