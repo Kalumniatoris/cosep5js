@@ -76,7 +76,7 @@ function setup() {
   //canvas = createCanvas(windowWidth-10,windowHeight-10);
   createCanvas(cwidth, cheight);
   buffer=createGraphics(cwidth,cheight);
-    buffer=createGraphics(cwidth,cheight);
+    //buffer=createGraphics(cwidth,cheight);
     //window.setInterval(logic,30);
    //window.setInterval(pdraw,2);
   // window.setInterval(toloop,31);
@@ -231,8 +231,8 @@ function logic(){
 
       
         if (
-         ( collideLineRect(tmp.prevX, tmp.prevY, tmp.x, tmp.y, tmp2.x - 5, tmp2.y - 5, 10, 10)||
-         collideRectRect(tmp.x-tmp.strength/6,tmp.y-tmp.strength/6,tmp.strength/3,tmp.strength/3,tmp2.x - 5, tmp2.y - 5, 10, 10)
+         ( collideLineRect(tmp.prevX, tmp.prevY, tmp.x, tmp.y, tmp2.x - tmp2.size/2, tmp2.y - tmp2.size/2, tmp2.size, tmp2.size)||
+         collideRectRect(tmp.x-tmp.strength/6,tmp.y-tmp.strength/6,tmp.strength/3,tmp.strength/3,tmp2.x - tmp2.size/2, tmp2.y - tmp2.size/2, tmp2.size, tmp2.size)
         )
         && tmp.creator.id !== tmp2.id) {
           // if(collideRectRect(tmp.x,tmp.y,2,2,tmp2.x,tmp2.y,10,10) && tmp.creator!==tmp2.id){

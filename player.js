@@ -23,6 +23,7 @@ var Player = class Player {
     this.shootDelay=10;
     this.bulletSpeed=20;
     this.maxLife=100;
+    this.size=10;
   //  this.stepLoop=setInterval(this.step,g.ldelay);
   }
   setOthers(others) {
@@ -48,6 +49,7 @@ var Player = class Player {
    this.maxSpeed+=0.5;
    this.bulletSpeed+=1;
    this.experience-=this.level*10;
+   this.size*=1.05;
    this.level+=1;
   }
   levelDown(){
@@ -55,7 +57,9 @@ var Player = class Player {
     this.maxSpeed-=0.5;
     this.bulletSpeed-=1;
    // this.experience=this.level*10;
-    this.level-=1;
+   this.size/=1.05; 
+   this.level-=1;
+    
   }
   step() {
     if(this.experience>10*this.level){
@@ -230,16 +234,21 @@ var Player = class Player {
     buffer.text(this.playersIsee.length, this.x - 5, this.y - 35);
     buffer.fill(this.color)
     buffer.noStroke()
-    buffer.rect(this.x - 5, this.y - 5, 10, 10);
+    buffer.rect(this.x - this.size/2, this.y - this.size/2, this.size, this.size);
     // text(tmp.id,tmp.x,tmp.y+20)
     var hedist = 8;
     buffer.ellipse(this.x + hedist * cos(this.dir), this.y + hedist * sin(this.dir), 8, 8)
     buffer.alpha(20)
       //stroke(222)
       buffer.stroke(222)
-      buffer.text(this.life, this.x, this.y + 15)
+     // buffer.text(this.life, this.x, this.y + 15)
       buffer.text(this.playersIsee.length, this.x - 5, this.y - 35);
       buffer.text(this.level+": "+this.experience,this.x-5,this.y-20);
+      buffer.fill([255,0,0]);
+      buffer.rect(this.x-this.size,this.y+this.size,this.size*2,this.size/2)
+      buffer.noStroke();
+      buffer.fill([0,255,0]);
+      buffer.rect(this.x-this.size,this.y+this.size,this.size*2*this.life/this.maxLife,(this.size/2))
   }
 
 
